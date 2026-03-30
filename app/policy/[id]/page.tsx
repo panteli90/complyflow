@@ -94,13 +94,13 @@ export default function PolicyPage() {
             <p className="font-semibold">🔄 Keep your policy auto-updated</p>
             <p className="text-gray-400 text-sm">Upgrade to Pro — your policy updates automatically as laws change.</p>
           </div>
-          
+          <a
             href="https://buy.stripe.com/test_14AeV6dCj3q7fo26RG6sw00"
             target="_blank"
             rel="noopener noreferrer"
             className="px-5 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold text-sm whitespace-nowrap transition-colors"
           >
-            Upgrade to Pro →
+            Upgrade to Pro &rarr;
           </a>
         </div>
 
