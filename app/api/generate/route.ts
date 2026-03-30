@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
     }
 
     const prompt = `Generate a professional, comprehensive privacy policy for a website with the URL: ${url}
+    
 
 The privacy policy should include:
 1. Introduction and overview
