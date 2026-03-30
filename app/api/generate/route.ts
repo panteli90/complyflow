@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { Redis } from '@upstash/redis';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+});
+
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
 });
 
 export async function POST(request: NextRequest) {
@@ -44,8 +50,14 @@ Format it cleanly with clear headings and professional language. Make it appropr
     });
 
     const policy = completion.choices[0].message.content;
-
     const id = Math.random().toString(36).substring(2, 10);
+
+    // Save to Upstash Redis
+    await redis.set(`policy-${id}`, JSON.stringify({
+      policy,
+      url,
+      createdAt: new Date().toISOString(),
+    }));
 
     return NextResponse.json({ policy, id });
 
