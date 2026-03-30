@@ -19,8 +19,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
     }
 const today = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
-    const prompt = `Generate a professional, comprehensive privacy policy for a website with the URL: ${url}
-    
+const prompt = `Generate a professional, comprehensive privacy policy for a website with the URL: ${url}.
+
+IMPORTANT: Use "${today}" as the Effective Date and Last Updated date. Do not use [Insert Date] or any placeholder.
+
 
 The privacy policy should include:
 1. Introduction and overview
