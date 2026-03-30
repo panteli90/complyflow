@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     if (!url) {
       return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
     }
-
+const today = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
     const prompt = `Generate a professional, comprehensive privacy policy for a website with the URL: ${url}
     
 
