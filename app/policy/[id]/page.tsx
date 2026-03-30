@@ -12,12 +12,29 @@ export default function PolicyPage() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem(`policy-${id}`);
-    if (saved) {
-      setPolicy(saved);
-    } else {
-      setNotFound(true);
-    }
+    const load = async () => {
+      try {
+        const res = await fetch(`/api/policy/${id}`);
+        if (!res.ok) {
+          const saved = localStorage.getItem(`policy-${id}`);
+          if (saved) {
+            setPolicy(saved);
+          } else {
+            setNotFound(true);
+          }
+          return;
+        }
+        const data = await res.json();
+        if (data.policy) {
+          setPolicy(data.policy);
+        } else {
+          setNotFound(true);
+        }
+      } catch (e) {
+        setNotFound(true);
+      }
+    };
+    load();
   }, [id]);
 
   if (notFound) {
@@ -77,9 +94,14 @@ export default function PolicyPage() {
             <p className="font-semibold">🔄 Keep your policy auto-updated</p>
             <p className="text-gray-400 text-sm">Upgrade to Pro — your policy updates automatically as laws change.</p>
           </div>
-          <button className="px-5 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold text-sm whitespace-nowrap transition-colors">
+          
+            href="https://buy.stripe.com/test_14AeV6dCj3q7fo26RG6sw00"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-5 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold text-sm whitespace-nowrap transition-colors"
+          >
             Upgrade to Pro →
-          </button>
+          </a>
         </div>
 
         {/* Policy content */}
@@ -114,15 +136,4 @@ export default function PolicyPage() {
               {typeof window !== 'undefined' ? window.location.href : ''}
             </code>
             <button
-              onClick={() => navigator.clipboard.writeText(window.location.href)}
-              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap"
-            >
-              Copy URL
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </main>
-  );
-}
+              onClick={() => navig
