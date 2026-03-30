@@ -8,10 +8,11 @@ const redis = new Redis({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const data = await redis.get(`policy-${params.id}`);
+    const { id } = await context.params;
+    const data = await redis.get(`policy-${id}`);
 
     if (!data) {
       return NextResponse.json({ error: 'Policy not found' }, { status: 404 });
