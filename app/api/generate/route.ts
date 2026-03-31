@@ -13,17 +13,28 @@ const redis = new Redis({
 
 export async function POST(request: NextRequest) {
   try {
-    const { url } = await request.json();
+    const { url, siteData } = await request.json();
 
     if (!url) {
       return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
     }
-const today = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
-const prompt = `Generate a professional, comprehensive privacy policy for a website with the URL: ${url}.
+
+    const today = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Build a richer prompt if we have site data
+    const siteInfo = siteData ? `
+Additional information about this website:
+- Collects email addresses: ${siteData.collectsEmails ? 'Yes' : 'No'}
+- Uses cookies/tracking: ${siteData.usesCookies ? 'Yes' : 'No'}
+- Has payment processing: ${siteData.hasPayments ? 'Yes' : 'No'}
+- Has user accounts: ${siteData.hasAccounts ? 'Yes' : 'No'}
+- Shares data with third parties: ${siteData.sharesData ? 'Yes' : 'No'}
+` : '';
+
+    const prompt = `Generate a professional, comprehensive privacy policy for a website with the URL: ${url}.
 
 IMPORTANT: Use "${today}" as the Effective Date and Last Updated date. Do not use [Insert Date] or any placeholder.
-
-
+${siteInfo}
 The privacy policy should include:
 1. Introduction and overview
 2. What information we collect
@@ -55,10 +66,11 @@ Format it cleanly with clear headings and professional language. Make it appropr
     const policy = completion.choices[0].message.content;
     const id = Math.random().toString(36).substring(2, 10);
 
-    // Save to Upstash Redis
+    // Save both the policy text AND the structured data
     await redis.set(`policy-${id}`, JSON.stringify({
       policy,
       url,
+      siteData: siteData || null,
       createdAt: new Date().toISOString(),
     }));
 
