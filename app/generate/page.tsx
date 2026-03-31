@@ -133,14 +133,6 @@ export default function GeneratePage() {
     </Suspense>
   );
 }
-```
 
-Press **`Command + S`** to save.
 
----
 
-## Step 3 — Push to GitHub
-```
-git add .
-git commit -m "Add dynamic policy system"
-git push origin main
