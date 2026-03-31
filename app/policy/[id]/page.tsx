@@ -43,7 +43,7 @@ export default function PolicyPage() {
         <div className="text-center">
           <div className="text-5xl mb-4">🔍</div>
           <h2 className="text-2xl font-bold mb-2">Policy not found</h2>
-          <p className="text-gray-400 mb-6">This policy may have expired or doesn't exist.</p>
+          <p className="text-gray-400 mb-6">This policy may have expired or doesnt exist.</p>
           <button
             onClick={() => router.push('/')}
             className="px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl font-semibold transition-colors"
@@ -70,13 +70,13 @@ export default function PolicyPage() {
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
             <span className="px-3 py-1 bg-green-500/10 border border-green-500/30 text-green-400 text-sm rounded-full">
-              ✅ Policy Generated
+              Policy Generated
             </span>
             <button
               onClick={() => router.push('/')}
               className="text-gray-500 hover:text-gray-300 text-sm transition-colors"
             >
-              ← Back to scanner
+              Back to scanner
             </button>
           </div>
           <h1 className="text-3xl font-bold mb-2">Your Privacy Policy</h1>
@@ -90,16 +90,16 @@ export default function PolicyPage() {
 
         <div className="bg-blue-600/10 border border-blue-500/30 rounded-xl p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <p className="font-semibold">🔄 Keep your policy auto-updated</p>
-            <p className="text-gray-400 text-sm">Upgrade to Pro — your policy updates automatically as laws change.</p>
+            <p className="font-semibold">Keep your policy auto-updated</p>
+            <p className="text-gray-400 text-sm">Upgrade to Pro and your policy updates automatically as laws change.</p>
           </div>
-          <a
+          
             href="https://buy.stripe.com/test_14AeV6dCj3q7fo26RG6sw00"
             target="_blank"
             rel="noopener noreferrer"
             className="px-5 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold text-sm whitespace-nowrap transition-colors"
           >
-            Upgrade to Pro →
+            Upgrade to Pro
           </a>
         </div>
 
@@ -127,7 +127,7 @@ export default function PolicyPage() {
         </div>
 
         <div className="mt-8 bg-gray-800 rounded-xl p-5">
-          <p className="font-semibold mb-2">📎 Add this link to your website footer:</p>
+          <p className="font-semibold mb-2">Add this link to your website footer:</p>
           <div className="flex gap-3 items-center">
             <code className="text-blue-400 text-sm flex-1 bg-gray-900 px-3 py-2 rounded-lg overflow-x-auto">
               {typeof window !== 'undefined' ? window.location.href : ''}
@@ -137,6 +137,22 @@ export default function PolicyPage() {
               className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap"
             >
               Copy URL
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-4 bg-gray-800 rounded-xl p-5">
+          <p className="font-semibold mb-1">Pro: Embed on your website</p>
+          <p className="text-gray-400 text-sm mb-3">Paste this where you want your policy to appear.</p>
+          <div className="flex gap-3 items-center">
+            <code className="text-green-400 text-xs flex-1 bg-gray-900 px-3 py-2 rounded-lg overflow-x-auto">
+              {`<div id="complyflow-policy"></div><script src="https://complyflow-eqyt.vercel.app/embed.js" data-id="${id}"></script>`}
+            </code>
+            <button
+              onClick={() => navigator.clipboard.writeText(`<div id="complyflow-policy"></div><script src="https://complyflow-eqyt.vercel.app/embed.js" data-id="${id}"></script>`)}
+              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap"
+            >
+              Copy
             </button>
           </div>
         </div>
